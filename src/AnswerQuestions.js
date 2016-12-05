@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import firebase from 'firebase';
 import {Alert, FormGroup, Checkbox, Radio, Col,  Button} from 'react-bootstrap';
 
+
 class AnswerQuestions extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +18,7 @@ class AnswerQuestions extends React.Component {
 
     componentDidMount() {
         //loading the question to be rendered
-        var questionRef = firebase.database().ref('questions');
+        var questionRef = firebase.database().ref('questions/' );
         questionRef.once('value', (snapshot) => {
             var questionList = [];
             snapshot.forEach((childSnapshot) =>{

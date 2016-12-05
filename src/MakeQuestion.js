@@ -63,13 +63,12 @@ class MakeQuestion extends React.Component {
             answer1Text: this.state.answer1,
             answer2Text: this.state.answer2,
             answer3Text: this.state.answer3,
-            answer4Text: this.state.answer4,
-            classCodeText: this.state.classCode,
+            answer4Text: this.state.answer4
 
         }
 
         //var questionsRef = jsonObjectInTheCloud['questions']; 
-        var questionRef = firebase.database().ref('questions');
+        var questionRef = firebase.database().ref('questions/' + this.state.classCode);
         questionRef.push(questionData);
         this.setState({
             isQuestionSubmitted: true
@@ -143,5 +142,6 @@ class MakeQuestion extends React.Component {
         )
     }
 }
+
 
 export default MakeQuestion;
