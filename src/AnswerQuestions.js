@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import firebase from 'firebase';
 import {Alert, FormGroup, Checkbox, Radio, Col,  Button} from 'react-bootstrap';
+import PollResult from './PollResults';
 
 class AnswerQuestions extends React.Component {
     constructor(props) {
@@ -101,7 +102,7 @@ class AnswerQuestions extends React.Component {
             </form>
         </div>}
         {this.state.isQuestionAnswered && <div className="well">You have successfully submitted the quiz. Thank you!</div>}
-        {this.state.isQuestionAnswered && <Link to="/results">View Results</Link>}
+        {this.state.isQuestionAnswered && <PollResult/>}
         </div>
       );      
     }
