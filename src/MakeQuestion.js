@@ -55,10 +55,11 @@ class MakeQuestion extends React.Component {
             answer1Text: this.state.answer1,
             answer2Text: this.state.answer2,
             answer3Text: this.state.answer3,
-            answer4Text: this.state.answer4
+            answer4Text: this.state.answer4,
+            time: firebase.database.ServerValue.TIMESTAMP
         }
 
-        //var chripsRef = jsonObjectInTheCloud['questions']; 
+        //var questionsRef = jsonObjectInTheCloud['questions']; 
         var questionRef = firebase.database().ref('questions');
         questionRef.push(questionData);
 
@@ -84,30 +85,31 @@ class MakeQuestion extends React.Component {
                         </Col>
                     </FormGroup>
 
-                    <FormGroup controlId="formHorizontalPassword">
-                        <Col componentClass={ControlLabel} sm={2}>
+                    <FormGroup controlId="formHorizontalPassword" >
+                        <Col componentClass={ControlLabel} sm={2} className="questionBox">
                         </Col>
 
                         <Col sm={10}>
                             <FormControl type="answer" placeholder="Choice A" value={this.state.answer1} onChange={(e) => this.updateAnswer1(e)} />
                         </Col>
+
                         <Col componentClass={ControlLabel} sm={2}>
                         </Col>
 
                         <Col sm={10}>
-                            <FormControl type="answer" placeholder="Choice B" value={this.state.answer2} onChange={(e) => this.updateAnswer2(e)}/>
-                        </Col>
-                        <Col componentClass={ControlLabel} sm={2}>
-                        </Col>
-
-                        <Col sm={10}>
-                            <FormControl type="answer" placeholder="Choice C" value={this.state.answer3} onChange={(e) => this.updateAnswer3(e)}/>
+                            <FormControl type="answer" placeholder="Choice B" value={this.state.answer2} onChange={(e) => this.updateAnswer2(e)} />
                         </Col>
                         <Col componentClass={ControlLabel} sm={2}>
                         </Col>
 
                         <Col sm={10}>
-                            <FormControl type="answer" placeholder="Choice D" value={this.state.answer4} onChange={(e) => this.updateAnswer4(e)}/>
+                            <FormControl type="answer" placeholder="Choice C" value={this.state.answer3} onChange={(e) => this.updateAnswer3(e)} />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+
+                        <Col sm={10}>
+                            <FormControl type="answer" placeholder="Choice D" value={this.state.answer4} onChange={(e) => this.updateAnswer4(e)} />
                         </Col>
                     </FormGroup>
                     <FormGroup>
