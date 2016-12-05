@@ -126,3 +126,8 @@ li {
   margin-right: .5em;
   margin-bottom: .5em;
 }
+
+.questionBox {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
