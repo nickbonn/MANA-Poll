@@ -12,7 +12,8 @@ class MakeQuestion extends React.Component {
             answer1: '',
             answer2: '',
             answer3: '',
-            answer4: ''
+            answer4: '',
+            isQuestionSubmitted: false,
         };
 
     }
@@ -62,6 +63,9 @@ class MakeQuestion extends React.Component {
         //var questionsRef = jsonObjectInTheCloud['questions']; 
         var questionRef = firebase.database().ref('questions');
         questionRef.push(questionData);
+        this.setState({
+            isQuestionSubmitted: true
+        });
 
         //empty out post (controlled input)
         this.setState({
@@ -118,6 +122,7 @@ class MakeQuestion extends React.Component {
                         </Col>
                     </FormGroup>
                 </Form>
+                {this.state.isQuestionSubmitted && <div className="well"> You have sucessfully submitted a question!</div>}
             </div >
         )
     }
