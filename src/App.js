@@ -4,8 +4,10 @@ import './App.css';
 import {Link} from 'react-router';
 import firebase from 'firebase';
 import {Alert} from 'react-bootstrap';
+import PollResult from './PollResults';
 //import noUserPic from './img/no-user-pic.png';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
+
 
 var LOGIN = true;
 
@@ -105,10 +107,8 @@ export class Questions extends React.Component {
       )
     } else { // logged in
       return (
-          <div>
-            Stuff needs to go here! View is different depending on if person signed in is teacher or student
-          </div>
-      );      
+        <PollResult/>
+      )
     }
   }
 }
