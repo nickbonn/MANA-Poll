@@ -4,6 +4,8 @@ import {Link} from 'react-router';
 import firebase from 'firebase';
 import {Alert, FormGroup, Checkbox, Radio, Col,  Button} from 'react-bootstrap';
 import MakeQuestion from './MakeQuestion';
+import PollResult from './PollResults';
+
 
 class AnswerQuestions extends React.Component {
     constructor(props) {
@@ -18,7 +20,7 @@ class AnswerQuestions extends React.Component {
 
     componentDidMount() {
         //loading the question to be rendered
-        var questionRef = firebase.database().ref('questions');
+        var questionRef = firebase.database().ref('questions/' );
         questionRef.once('value', (snapshot) => {
             var questionList = [];
             snapshot.forEach((childSnapshot) =>{
@@ -102,6 +104,7 @@ class AnswerQuestions extends React.Component {
             </form>
         </div>}
         {this.state.isQuestionAnswered && <div className="well">You have successfully submitted the quiz. Thank you!</div>}
+        {this.state.isQuestionAnswered && <PollResult/>}
         </div>
       );      
     }

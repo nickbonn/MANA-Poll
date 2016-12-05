@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import './App.css';
 import { Link } from 'react-router';
 import firebase from 'firebase';
-import { Alert } from 'react-bootstrap';
+import PollResult from './PollResults';
+import {Alert, ButtonGroup, Button} from 'react-bootstrap';
 import MakeQuestion from './MakeQuestion';
 //import noUserPic from './img/no-user-pic.png';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
 import AnswerQuestions from './AnswerQuestions';
 import ReactDOM from 'react-dom';
+
 
 
 var LOGIN = true;
@@ -45,18 +47,20 @@ class App extends React.Component {
   }
 
   // Registering new users
-  signUp(email, password, handle, avatar) {
+  signUp(email, password, handle, /*classCodeVal,*/ teacherBoolean) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function (firebaseUser) {
         var profilePromise = firebaseUser.updateProfile({
           displayName: handle,
-          photoURL: avatar
+          //classCode: classCodeVal,
+          isTeacher: teacherBoolean
         });
         // creating new entry in the Cloud DB
         var userRef = firebase.database().ref('users/' + firebaseUser.uid);
         var userData = {
           handle: handle,
-          avatar: avatar
+          //classCode: classCodeVal,
+          isTeacher: teacherBoolean
         }
         var userPromise = userRef.set(userData); //update entry in JOITC
         return Promise.all(profilePromise, userPromise);
@@ -147,7 +151,9 @@ class Login extends React.Component {
 class Join extends React.Component {
   render() {
     return (
-      <SignUpForm signUpCallback={this.props.signUpCallback} />
+      <div>
+        <SignUpForm signUpCallback={this.props.signUpCallback} />
+      </div>
     );
   }
 }
@@ -160,15 +166,25 @@ class SignUpForm extends React.Component {
       'password': undefined,
       'passwordConfirm': undefined,
       'handle': undefined,
-      'classCode': undefined,
-      'avatar': ''
+      //'classCode': undefined,
+      'isTeacher': undefined
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.teacherClick = this.teacherClick.bind(this);
+    this.studentClick = this.studentClick.bind(this);
   }
 
   handleClick() {
     LOGIN = true;
+  }
+
+  teacherClick() {
+    this.setState({isTeacher:true});
+  }
+
+  studentClick() {
+    this.setState({isTeacher:false});
   }
 
   //update state for each specific field
@@ -183,10 +199,10 @@ class SignUpForm extends React.Component {
   //handle signUp button
   signUp(event) {
     event.preventDefault(); //don't submit
-    this.props.signUpCallback(this.state.email, this.state.password, this.state.handle, this.state.classCode, this.state.avatar);
+    this.props.signUpCallback(this.state.email, this.state.password, this.state.handle, /*this.state.classCode,*/ this.state.isTeacher);
   }
 
-  // code provided by Joel Ross
+  // basis of validation code provided by Joel Ross
   /**
    * A helper function to validate a value based on a hash of validations
    * second parameter has format e.g., 
@@ -249,24 +265,26 @@ class SignUpForm extends React.Component {
     var passwordErrorsForSignIn = this.validate(this.state.password, { required: true, minLength: 6 });
     var passwordConfirmErrors = this.validate(this.state.passwordConfirm, { required: true });
     var handleErrors = this.validate(this.state.handle, { required: true, minLength: 3 });
-    var classCodeErrors = this.validate(this.state.classCode, { required: true, minLength: 6 });
+    //var classCodeErrors = this.validate(this.state.classCode, { required: true, minLength: 6 });
+    if (this.state.isTeacher === true || this.state.isTeacher === false) {
+      var isTeacherErrors = true;
+    } else {
+      var isTeacherErrors = false;
+    }
     //button validation
-    var signUpEnabled = (emailErrors.isValid && passwordErrors.isValid && handleErrors.isValid && passwordConfirmErrors.isValid && classCodeErrors.isValid);
+    var signUpEnabled = (emailErrors.isValid && passwordErrors.isValid && handleErrors.isValid && passwordConfirmErrors.isValid && /*classCodeErrors.isValid &&*/ isTeacherErrors);
 
-    return (
-      <form role="form" className="sign-up-form">
-        <ValidatedInput field="email" type="email" label="Email" changeCallback={this.handleChange} errors={emailErrors} />
-        <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
-        <ValidatedInput field="passwordConfirm" type="password" label="Confirm Password" changeCallback={this.handleChange} errors={passwordConfirmErrors} />
-        <ValidatedInput field="handle" type="text" label="Handle" changeCallback={this.handleChange} errors={handleErrors} />
-        <ValidatedInput field="classCode" type="text" label="Please Input Class Code:" changeCallback={this.handleChange} errors={classCodeErrors} />
-
-        {/* We don't need avatar, but maybe something else?
-          <div className="form-group">
-            <img className="avatar" src={this.state.avatar || noUserPic} alt="avatar preview" />
-            <label htmlFor="avatar" className="control-label">Avatar Image URL</label>
-            <input id="avatar" name="avatar" className="form-control" placeholder="http://www.example.com/my-picture.jpg" onChange={this.handleChange} />
-          </div>*/}
+      return (
+        <form role="form" className="sign-up-form">
+          <ValidatedInput field="email" type="email" label="Email" changeCallback={this.handleChange} errors={emailErrors} />
+          <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
+          <ValidatedInput field="passwordConfirm" type="password" label="Confirm Password" changeCallback={this.handleChange} errors={passwordConfirmErrors} />
+          <ValidatedInput field="handle" type="text" label="Handle" changeCallback={this.handleChange} errors={handleErrors} />
+          {/*<ValidatedInput field="classCode" type="text" label="Please Input Class Code:" changeCallback={this.handleChange} errors={classCodeErrors} />*/}
+          <ButtonGroup>
+            <Button onClick={this.teacherClick}>I am a teacher</Button>
+            <Button onClick={this.studentClick}>I am a student</Button>
+          </ButtonGroup>
 
         <div className="form-group sign-up-buttons">
           <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
