@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import firebase from 'firebase';
 import {Alert, FormGroup, Checkbox, Radio, Col,  Button} from 'react-bootstrap';
+import MakeQuestion from './MakeQuestion';
 
 class AnswerQuestions extends React.Component {
     constructor(props) {
