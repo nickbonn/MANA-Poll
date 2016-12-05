@@ -23,12 +23,22 @@ class App extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('Auth state changed: logged in as', user.email);
+        //console.log(user);
+        //console.log('Auth state changed: logged in as', user.email);
         this.setState({ userId: user.uid });
-        this.setState({isTeacher: user.isTeacher});
+        //loading the isTeacher property from the users table where users.uid = authenticated user.uid and setting the isTeacher property in state
+        var userRef = firebase.database().ref("users/"+user.uid);
+        userRef.once("value").then((snapshot)=>{
+            var key = snapshot.key;
+            var value = snapshot.val();
+            console.log(value);
+            this.setState({isTeacher: value.isTeacher});
+        });
+
+        
       }
       else {
-        console.log('Auth state changed: logged out');
+        //console.log('Auth state changed: logged out');
         this.setState({ userId: null }); //null out saved state
       }
     })
@@ -80,11 +90,12 @@ class App extends React.Component {
         content = <Join signUpCallback={this.signUp} />;
       }
     }
+    //to identify which type of page to load: an if statement for if isTeacher is true, the make questions page will load. Else (student user), the answer question page will load
     else {
       if(this.state.isTeacher) {
         content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
       } else {
-      content = <AnswerQuestions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+        content = <AnswerQuestions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
       }
     }
 
