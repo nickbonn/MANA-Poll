@@ -127,7 +127,7 @@ li {
   margin-bottom: .5em;
 }
 
-<<<<<<< HEAD
+
 /* overriding bootsrap button-group */
 .btn-group {
 	margin-bottom: 20px;
@@ -151,9 +151,9 @@ li {
 #wrapper {
 	min-height:100%;
 	position:relative;
-=======
+}
+
 .questionBox {
 	padding-top: 10px;
 	padding-bottom: 10px;
->>>>>>> 7cd1d8adba83fda4c14932a792c8a89a5dbfa325
 }
