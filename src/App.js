@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import firebase from 'firebase';
 import {Alert, ButtonGroup, Button} from 'react-bootstrap';
+import MakeQuestion from './MakeQuestion';
 //import noUserPic from './img/no-user-pic.png';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
+import AnswerQuestions from './AnswerQuestions';
+import ReactDOM from 'react-dom';
+
 
 var LOGIN = true;
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
     this.signIn = this.signIn.bind(this);
@@ -18,13 +22,24 @@ class App extends React.Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      if(user) {
-        console.log('Auth state changed: logged in as', user.email);
-        this.setState({userId:user.uid});
+      if (user) {
+        //console.log(user);
+        //console.log('Auth state changed: logged in as', user.email);
+        this.setState({ userId: user.uid });
+        //loading the isTeacher property from the users table where users.uid = authenticated user.uid and setting the isTeacher property in state
+        var userRef = firebase.database().ref("users/"+user.uid);
+        userRef.once("value").then((snapshot)=>{
+            var key = snapshot.key;
+            var value = snapshot.val();
+            console.log(value);
+            this.setState({isTeacher: value.isTeacher});
+        });
+
+        
       }
-      else{
-        console.log('Auth state changed: logged out');
-        this.setState({userId: null}); //null out saved state
+      else {
+        //console.log('Auth state changed: logged out');
+        this.setState({ userId: null }); //null out saved state
       }
     })
   }
@@ -32,14 +47,14 @@ class App extends React.Component {
   // Registering new users
   signUp(email, password, handle, /*classCodeVal,*/ teacherBoolean) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(function(firebaseUser) {
+      .then(function (firebaseUser) {
         var profilePromise = firebaseUser.updateProfile({
           displayName: handle,
           //classCode: classCodeVal,
           isTeacher: teacherBoolean
         });
         // creating new entry in the Cloud DB
-				var userRef = firebase.database().ref('users/'+firebaseUser.uid); 
+        var userRef = firebase.database().ref('users/' + firebaseUser.uid);
         var userData = {
           handle: handle,
           //classCode: classCodeVal,
@@ -56,12 +71,12 @@ class App extends React.Component {
   signIn(email, password) {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .catch((err) => {
-        this.setState({passwordAlert: true});
+        this.setState({ passwordAlert: true });
       })
   }
 
   // Logging out the current user
-  signOut(){
+  signOut() {
     firebase.auth().signOut();
   }
 
@@ -70,31 +85,36 @@ class App extends React.Component {
     if (this.state.passwordAlert) {
       var passwordAlertTag = <Alert bsStyle="warning"><strong>Password is incorrect for username!</strong> Please try again.</Alert>;
     }
-    if(!this.state.userId) { //if logged out, show signup form
+    if (!this.state.userId) { //if logged out, show signup form
       if (LOGIN) {
-        content = <Login signInCallback={this.signIn} passwordAlert={passwordAlertTag}/>;
+        content = <Login signInCallback={this.signIn} passwordAlert={passwordAlertTag} />;
       } else {
         content = <Join signUpCallback={this.signUp} />;
       }
     }
+    //to identify which type of page to load: an if statement for if isTeacher is true, the make questions page will load. Else (student user), the answer question page will load
     else {
-      content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+      if(this.state.isTeacher) {
+        content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+      } else {
+        content = <AnswerQuestions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+      }
     }
 
     return (
       <div>
         <header className="container-fluid">
           <h1>- manapoll -</h1>
-          {this.state.userId && 
+          {this.state.userId &&
             <div className="logout">
-              <button className="btn btn-primary" onClick={()=>this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</button>
+              <button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</button>
             </div>
           }
         </header>
-        <main className="container">        
+        <main className="container">
           {content}
         </main>
-      </div>      
+      </div>
     );
   }
 }
@@ -103,14 +123,14 @@ export class Questions extends React.Component {
   render() {
     if (!this.props.logged) { // not logged in
       return (
-        <Login signUpCallback={this.props.signUpCallback} signInCallback={this.props.signInCallback} />  
+        <Login signUpCallback={this.props.signUpCallback} signInCallback={this.props.signInCallback} />
       )
     } else { // logged in
       return (
-          <div>
-            Stuff needs to go here! View is different depending on if person signed in is teacher or student
-          </div>
-      );      
+        <div>
+          <MakeQuestion />
+        </div>
+      );
     }
   }
 }
@@ -240,7 +260,7 @@ class SignUpForm extends React.Component {
     //field validation
     var emailErrors = this.validate(this.state.email, { required: true, email: true });
     var passwordErrors = this.validate(this.state.password, { required: true, minLength: 6, matches: true });
-    var passwordErrorsForSignIn = this.validate(this.state.password, { required: true, minLength: 6});
+    var passwordErrorsForSignIn = this.validate(this.state.password, { required: true, minLength: 6 });
     var passwordConfirmErrors = this.validate(this.state.passwordConfirm, { required: true });
     var handleErrors = this.validate(this.state.handle, { required: true, minLength: 3 });
     //var classCodeErrors = this.validate(this.state.classCode, { required: true, minLength: 6 });
@@ -264,12 +284,12 @@ class SignUpForm extends React.Component {
             <Button onClick={this.studentClick}>I am a student</Button>
           </ButtonGroup>
 
-          <div className="form-group sign-up-buttons">
-            <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
-            <button className="btn" onClick={this.handleClick}><Link to="/login" className="link">Have an account? Sign in here!</Link></button>
-          </div>
-        </form>
-      );
+        <div className="form-group sign-up-buttons">
+          <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
+          <button className="btn" onClick={this.handleClick}><Link to="/login" className="link">Have an account? Sign in here!</Link></button>
+        </div>
+      </form>
+    );
   }
 }
 
@@ -349,7 +369,7 @@ class SignInForm extends React.Component {
   render() {
     //field validation
     var emailErrors = this.validate(this.state.email, { required: true, email: true });
-    var passwordErrors = this.validate(this.state.password, { required: true, minLength: 6});
+    var passwordErrors = this.validate(this.state.password, { required: true, minLength: 6 });
     //button validation
     var signInEnabled = (emailErrors.isValid && passwordErrors.isValid);
 
@@ -394,7 +414,7 @@ class ValidationErrors extends React.Component {
           <p className="help-block">Not an email address!</p>
         }
         {this.props.errors.minLength &&
-          <p className="help-block">Must be at least {this.props.errors.minLength} characters.</p>
+          <p className="help-block">Must be at least {this.props.errors.minLength}characters.</p>
         }
         {this.props.errors.matches &&
           <p className="help-block">Must confirm same password below.</p>
