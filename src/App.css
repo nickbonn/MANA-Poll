@@ -126,3 +126,34 @@ li {
   margin-right: .5em;
   margin-bottom: .5em;
 }
+
+
+/* overriding bootsrap button-group */
+.btn-group {
+	margin-bottom: 20px;
+	margin-top: 5px;
+}
+
+.btn-group > .btn {
+	margin-right: 0px;
+}
+
+/* Footer */
+.footer {
+	background-color: lightsalmon;
+  width:100%;
+	height:35px;
+	position:absolute;
+	bottom:0;
+	left:0;
+}
+
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+
+.questionBox {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
