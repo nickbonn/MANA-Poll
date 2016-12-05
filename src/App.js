@@ -6,6 +6,9 @@ import firebase from 'firebase';
 import {Alert} from 'react-bootstrap';
 //import noUserPic from './img/no-user-pic.png';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
+import AnswerQuestions from './AnswerQuestions';
+import ReactDOM from 'react-dom';
+
 
 var LOGIN = true;
 
@@ -76,7 +79,7 @@ class App extends React.Component {
       }
     }
     else {
-      content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+      content = <AnswerQuestions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
     }
 
     return (
@@ -97,21 +100,21 @@ class App extends React.Component {
   }
 }
 
-export class Questions extends React.Component {
-  render() {
-    if (!this.props.logged) { // not logged in
-      return (
-        <Login signUpCallback={this.props.signUpCallback} signInCallback={this.props.signInCallback} />  
-      )
-    } else { // logged in
-      return (
-          <div>
-            Stuff needs to go here! View is different depending on if person signed in is teacher or student
-          </div>
-      );      
-    }
-  }
-}
+// export class Questions extends React.Component {
+//   render() {
+//     if (!this.props.logged) { // not logged in
+//       return (
+//         <Login signUpCallback={this.props.signUpCallback} signInCallback={this.props.signInCallback} />  
+//       )
+//     } else { // logged in
+//       return (
+//           <div>
+//             Stuff needs to go here! View is different depending on if person signed in is teacher or student
+//           </div>
+//       );      
+//     }
+//   }
+// }
 
 class Login extends React.Component {
   render() {
