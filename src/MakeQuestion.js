@@ -13,6 +13,7 @@ class MakeQuestion extends React.Component {
             answer2: '',
             answer3: '',
             answer4: '',
+            classCode: '',
             isQuestionSubmitted: false,
         };
 
@@ -47,6 +48,12 @@ class MakeQuestion extends React.Component {
         });
     }
 
+    updateClassCode(event) {
+        this.setState({
+            classCode: event.target.value
+        });
+    }
+
     postQuestion(event) {
         event.preventDefault(); //don't submit
 
@@ -57,7 +64,8 @@ class MakeQuestion extends React.Component {
             answer2Text: this.state.answer2,
             answer3Text: this.state.answer3,
             answer4Text: this.state.answer4,
-            time: firebase.database.ServerValue.TIMESTAMP
+            classCodeText: this.state.classCode,
+
         }
 
         //var questionsRef = jsonObjectInTheCloud['questions']; 
@@ -85,12 +93,20 @@ class MakeQuestion extends React.Component {
                         </Col>
 
                         <Col sm={10}>
+                            <FormControl type="classCode" placeholder="Class Code (e.g. Math126)" value={this.state.classCode} onChange={(e) => this.updateClassCode(e)} />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId="formHorizontalEmail">
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+
+                        <Col sm={10}>
                             <FormControl type="question" placeholder="Question" value={this.state.question} onChange={(e) => this.updateQuestion(e)} />
                         </Col>
                     </FormGroup>
 
                     <FormGroup controlId="formHorizontalPassword" >
-                        <Col componentClass={ControlLabel} sm={2} className="questionBox">
+                        <Col componentClass={ControlLabel} sm={2} >
                         </Col>
 
                         <Col sm={10}>
