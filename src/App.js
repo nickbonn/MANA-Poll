@@ -20,6 +20,7 @@ class App extends React.Component {
     super(props);
     this.state = {};
     this.signIn = this.signIn.bind(this);
+    this.loadClassCode = this.loadClassCode.bind(this);
   }
 
   componentDidMount() {
@@ -82,6 +83,10 @@ class App extends React.Component {
     firebase.auth().signOut();
   }
 
+  loadClassCode(code) {
+    this.setState({classCode:code});
+  }
+
   render() {
     var content = null; //what main content to show
     if (this.state.passwordAlert) {
@@ -98,8 +103,12 @@ class App extends React.Component {
     else {
       if(this.state.isTeacher) {
         content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+      } else if(!this.state.classCode){
+        content = <ClassCodes logged={this.state.userId} classCodeCallback={this.loadClassCode}/>;
+        
       } else {
-        content = <AnswerQuestions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+        content= <PollResult classCode={this.state.classCode}/>
+        //<AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
       }
     }
 
@@ -135,6 +144,46 @@ export class Questions extends React.Component {
       );
     }
   }
+}
+
+class ClassCodes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      'classCode': undefined
+    };
+    //function binding
+    this.handleChange = this.handleChange.bind(this);
+  }  
+
+  handleChange(event) {
+    var field = event.target.name;
+    var value = event.target.value;
+
+    var changes = {}; //object to hold changes
+    changes[field] = value; //change this field
+    this.setState(changes); //update state
+  }
+
+  enterClass(event){
+    event.preventDefault();
+    this.props.classCodeCallback(this.state.classCode);
+  }
+
+  render() {
+    if (!this.props.logged) { // not logged in
+      return (
+        <div> User is not logged in!</div>  
+      );
+    } else {
+      return(
+      <form>
+        Class Code: <input type="text" name="classCode" onChange={this.handleChange}/>
+        <button className="btn btn-primary" onClick={(e) => this.enterClass(e)}>Enter Class</button>
+      </form>
+    )
+  }
+}
 }
 
 class Login extends React.Component {

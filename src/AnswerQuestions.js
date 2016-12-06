@@ -19,7 +19,7 @@ class AnswerQuestions extends React.Component {
 
     componentDidMount() {
         //loading the question to be rendered
-        var questionRef = firebase.database().ref('questions/' );
+        var questionRef = firebase.database().ref('questions/' + this.props.classCode);
         questionRef.once('value', (snapshot) => {
             var questionList = [];
             snapshot.forEach((childSnapshot) =>{

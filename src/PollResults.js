@@ -13,7 +13,7 @@ class PollResults extends React.Component {
   }
 
   componentDidMount(){
-    var questionRef = firebase.database().ref('questions');
+    var questionRef = firebase.database().ref('questions/' + this.props.classCode);
     questionRef.on('value', (snapshot) => {
       var questionArray = [];
       snapshot.forEach(function(child) {
@@ -36,10 +36,9 @@ class PollResults extends React.Component {
 
 class IndivQuestion extends React.Component {
   render() {
-    console.log(this.props.question.key);
+    //console.log(this.props.question.key);
     //var answerRef = firebase.database().ref('answers');
     //answerRef
-
     return (
       <div className="span6">
         <h2>{this.props.question.questionText}</h2>
