@@ -98,8 +98,10 @@ class App extends React.Component {
     else {
       if(this.state.isTeacher) {
         content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
-      } else {
-        content = <AnswerQuestions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+      } else  { //youre a student
+        //if (u have inputed a class code) -load 
+        //hardcoded as info343 right now but need to change with whatever the user inputs as class code
+          content = <AnswerQuestions classCode={'Info343'} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
       }
     }
 
