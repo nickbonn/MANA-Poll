@@ -99,7 +99,8 @@ class App extends React.Component {
       if(this.state.isTeacher) {
         content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
       } else {
-        content = <AnswerQuestions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+        // this is hardcoded need to change with whatever the user inputs as classCode
+        content = <AnswerQuestions classCode={'Info343'} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
       }
     }
 
@@ -130,7 +131,7 @@ export class Questions extends React.Component {
     } else { // logged in
       return (
         <div>
-          <MakeQuestion />
+          <MakeQuestion /> 
         </div>
       );
     }
