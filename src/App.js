@@ -167,7 +167,7 @@ class ClassCodes extends React.Component {
 
   enterClass(event){
     event.preventDefault();
-    this.props.classCodeCallback(this.state.classCode);
+    this.props.classCodeCallback(this.state.classCode.toUpperCase());
   }
 
   render() {
