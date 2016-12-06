@@ -109,6 +109,7 @@ class App extends React.Component {
       } else {
         content= <PollResult classCode={this.state.classCode}/>
         //<AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
+      }
     }
 
     return (
@@ -166,7 +167,7 @@ class ClassCodes extends React.Component {
 
   enterClass(event){
     event.preventDefault();
-    this.props.classCodeCallback(this.state.classCode);
+    this.props.classCodeCallback(this.state.classCode.toUpperCase());
   }
 
   render() {
