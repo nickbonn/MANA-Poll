@@ -10,6 +10,7 @@ import MakeQuestion from './MakeQuestion';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
 import AnswerQuestions from './AnswerQuestions';
 import ReactDOM from 'react-dom';
+import './PollResults.css';
 
 var LOGIN = true;
 
@@ -117,10 +118,14 @@ class App extends React.Component {
         console.log('hello');
         content = <PollResult classCode={this.state.classCode}/>;
       } else {
+
         content= <AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
+
+
 
       }
     }
+
 
     return (
       <div>
@@ -167,6 +172,7 @@ export class Questions extends React.Component {
         <div>
           <MakeQuestion />
           <button className="btn btn-primary" onClick={(e) => this.enterResults(e)}>View Results</button>
+
         </div>
       );
     }
