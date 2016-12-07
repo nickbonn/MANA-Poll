@@ -4,15 +4,13 @@ import './App.css';
 import { Link } from 'react-router';
 import firebase from 'firebase';
 import PollResult from './PollResults';
-import {Alert, ButtonGroup, Button} from 'react-bootstrap';
+import {Alert, ButtonGroup, Button, Glyphicon, FormControl} from 'react-bootstrap';
 import MakeQuestion from './MakeQuestion';
 //import noUserPic from './img/no-user-pic.png';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
 import AnswerQuestions from './AnswerQuestions';
 import ReactDOM from 'react-dom';
 import './PollResults.css';
-
-
 
 var LOGIN = true;
 
@@ -132,11 +130,15 @@ class App extends React.Component {
     return (
       <div>
         <header className="container-fluid">
-          <h1>- manapoll -</h1>
+          <h1><Glyphicon glyph="tint" /> m a n a p o l l <Glyphicon glyph="tint" /></h1>
+          <h6>A better way to poll</h6>
+          <h6 id="tiny-header">[Made in Seattle]</h6>
           {this.state.userId &&
             <div className="logout">
-              <button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</button>
-              <button className="btn btn-primary" onClick={() => this.goHome()}>Make a Question</button>
+              <ButtonGroup>
+                <Button className="btn btn-primary" onClick={() => this.goHome()}>Go Home</Button>
+                <Button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</Button>
+              </ButtonGroup>
             </div>
           }
         </header>
@@ -205,11 +207,18 @@ class ClassCodes extends React.Component {
       return (
         <div> User is not logged in!</div>  
       );
-    } else {
-      return(
-      <form>
-        Class Code: <input type="text" name="classCode" onChange={this.handleChange}/>
-        <button className="btn btn-primary" onClick={(e) => this.enterClass(e)}>Enter Class</button>
+    } else { 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      // RENDER AN ALERT IF THE CLASS DOES NOT EXIST, RIGHT NOW IT RENDERS AN EMPTY SCREEN IF THE CLASS DOES NOT EXIST
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      return (
+      <form role="form" className="sign-up-form">
+        <FormControl className="enter-class" type="text" placeholder="Enter Class Code (e.g. Math126)" name="classCode" onChange={this.handleChange}/>
+        <button className="btn btn-primary enter-class" onClick={(e) => this.enterClass(e)}>Enter Class</button>
       </form>
     )
   }
@@ -361,9 +370,13 @@ class SignUpForm extends React.Component {
           <ValidatedInput field="handle" type="text" label="Handle" changeCallback={this.handleChange} errors={handleErrors} />
           {/*<ValidatedInput field="classCode" type="text" label="Please Input Class Code:" changeCallback={this.handleChange} errors={classCodeErrors} />*/}
           <ButtonGroup>
-            <Button onClick={this.teacherClick}>I am a teacher</Button>
-            <Button onClick={this.studentClick}>I am a student</Button>
+            <Button className="btn-warning" onClick={this.teacherClick}>I am a teacher</Button>
+            <Button className="btn-warning" onClick={this.studentClick}>I am a student</Button>
           </ButtonGroup>
+          {/*<DropdownButton className="btn-warning" title="Status">
+            <MenuItem eventKey="1">I am a teacher</MenuItem>
+            <MenuItem eventKey="2">I am a student</MenuItem>
+          </DropdownButton>*/}
 
         <div className="form-group sign-up-buttons">
           <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
@@ -495,7 +508,7 @@ class ValidationErrors extends React.Component {
           <p className="help-block">Not an email address!</p>
         }
         {this.props.errors.minLength &&
-          <p className="help-block">Must be at least {this.props.errors.minLength}characters.</p>
+          <p className="help-block">Must be at least {this.props.errors.minLength} characters.</p>
         }
         {this.props.errors.matches &&
           <p className="help-block">Must confirm same password below.</p>

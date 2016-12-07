@@ -85,7 +85,6 @@ class QuestionComp extends React.Component {
         });
         event.preventDefault();
         var answerRef = firebase.database().ref('answers/' + this.props.classCode);
-        //an answer object to be saved to the firebase.
         var newAnswer = {
             questionUID:this.props.question.key, 
             userUID:firebase.auth().currentUser.uid,        
