@@ -100,6 +100,7 @@ class App extends React.Component {
     //to identify which type of page to load: an if statement for if isTeacher is true, the make questions page will load. Else (student user), the answer question page will load
     else {
       if(this.state.isTeacher) {
+        // render conditionally
         content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
       } else if(!this.state.classCode){
         content = <ClassCodes logged={this.state.userId} classCodeCallback={this.loadClassCode}/>;
@@ -140,6 +141,7 @@ export class Questions extends React.Component {
       return (
         <div>
           <MakeQuestion />
+          
         </div>
       );
     }

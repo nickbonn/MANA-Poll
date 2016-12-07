@@ -5,7 +5,7 @@ import './index.css';
 import {Login, Join, Questions} from './App';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import firebase from 'firebase';
-import PollResult from './PollResults';
+import PollResults from './PollResults';
 
 
 // Initialize Firebase
@@ -30,7 +30,7 @@ ReactDOM.render(
       <Route path="join" component={Join} />
       <Route path="login" component={Login} />
       <Route path="questions" component={Questions} />
-      <Route path="results" component={PollResult} />
+      <Route path="results" component={PollResults} />
     </ Route>
   </ Router>
   ,
