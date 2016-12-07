@@ -92,7 +92,7 @@ class MakeQuestion extends React.Component {
                         </Col>
 
                         <Col sm={10}>
-                            <FormControl type="classCode" placeholder="Class Code (e.g. Math126)" value={this.state.classCode} onChange={(e) => this.updateClassCode(e)} />
+                            <FormControl type="classCode" placeholder="Class Code (e.g. MATH126)" value={this.state.classCode.toUpperCase()} onChange={(e) => this.updateClassCode(e)} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="formHorizontalEmail">

@@ -34,7 +34,7 @@ class App extends React.Component {
         userRef.once("value").then((snapshot)=>{
             var key = snapshot.key;
             var value = snapshot.val();
-            console.log(value);
+            //console.log(value);
             this.setState({isTeacher: value.isTeacher});
         });
 
@@ -109,6 +109,7 @@ class App extends React.Component {
       } else {
         content= <PollResult classCode={this.state.classCode}/>
         //<AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
+
       }
     }
 
