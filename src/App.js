@@ -4,14 +4,12 @@ import './App.css';
 import { Link } from 'react-router';
 import firebase from 'firebase';
 import PollResult from './PollResults';
-import {Alert, ButtonGroup, Button} from 'react-bootstrap';
+import {Alert, ButtonGroup, Button, Glyphicon} from 'react-bootstrap';
 import MakeQuestion from './MakeQuestion';
 //import noUserPic from './img/no-user-pic.png';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
 import AnswerQuestions from './AnswerQuestions';
 import ReactDOM from 'react-dom';
-
-
 
 var LOGIN = true;
 
@@ -106,7 +104,8 @@ class App extends React.Component {
     return (
       <div>
         <header className="container-fluid">
-          <h1>- manapoll -</h1>
+          <h1><Glyphicon glyph="tint" /> m a n a p o l l <Glyphicon glyph="tint" /></h1>
+          <h6>A better way to poll</h6>
           {this.state.userId &&
             <div className="logout">
               <button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</button>
@@ -282,9 +281,13 @@ class SignUpForm extends React.Component {
           <ValidatedInput field="handle" type="text" label="Handle" changeCallback={this.handleChange} errors={handleErrors} />
           {/*<ValidatedInput field="classCode" type="text" label="Please Input Class Code:" changeCallback={this.handleChange} errors={classCodeErrors} />*/}
           <ButtonGroup>
-            <Button onClick={this.teacherClick}>I am a teacher</Button>
-            <Button onClick={this.studentClick}>I am a student</Button>
+            <Button className="btn-warning" onClick={this.teacherClick}>I am a teacher</Button>
+            <Button className="btn-warning" onClick={this.studentClick}>I am a student</Button>
           </ButtonGroup>
+          {/*<DropdownButton className="btn-warning" title="Status">
+            <MenuItem eventKey="1">I am a teacher</MenuItem>
+            <MenuItem eventKey="2">I am a student</MenuItem>
+          </DropdownButton>*/}
 
         <div className="form-group sign-up-buttons">
           <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
