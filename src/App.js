@@ -80,6 +80,7 @@ class App extends React.Component {
   // Logging out the current user
   signOut() {
     firebase.auth().signOut();
+    this.setState({classCode: null, viewResult:false});
   }
 
   loadClassCode(code) {
@@ -88,6 +89,10 @@ class App extends React.Component {
 
   viewResults(bool) {
     this.setState({viewResult:bool})
+  }
+
+  goHome(){
+    this.setState({classCode: null, viewResult:false});
   }
 
   render() {
@@ -125,6 +130,7 @@ class App extends React.Component {
           {this.state.userId &&
             <div className="logout">
               <button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</button>
+              <button className="btn btn-primary" onClick={() => this.goHome()}>Make a Question</button>
             </div>
           }
         </header>
