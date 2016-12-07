@@ -102,7 +102,6 @@ class IndivQuestion extends React.Component {
         <h2>{this.props.answer.text}</h2><h5>Total Votes: {totalCount}</h5>
         <strong>{question1Text}</strong><span className="pull-right">{firstPercent}</span>
         <div className="progress progress-bar-danger active progress-bar-striped" style={{width: firstPercent}}>
-
         </div>
         <strong>{question2Text}</strong><span className="pull-right">{secondPercent}</span>
         <div className="progress progress-bar-info active progress-bar-striped" style={{width: secondPercent}}>
