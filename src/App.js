@@ -131,7 +131,7 @@ class App extends React.Component {
           {this.state.userId &&
             <div className="logout">
               <button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</button>
-              <button className="btn btn-primary" onClick={() => this.goHome()}>Make a Question</button>
+              <button className="btn btn-primary left-button" onClick={() => this.goHome()}>Go Home</button>
             </div>
           }
         </header>
@@ -190,7 +190,7 @@ class ClassCodes extends React.Component {
     this.setState(changes); //update state
   }
 
-  enterClass(event){
+  enterClass(event){ //make sure class code gets passed back up to main app class
     event.preventDefault();
     this.props.classCodeCallback(this.state.classCode.toUpperCase());
   }

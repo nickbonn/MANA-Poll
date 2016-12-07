@@ -153,3 +153,13 @@ li {
 	position:relative;
 }
 
+.left-button{
+	float: right;
+	display: block;
+}
+
+.logout{
+	float: left;
+}
+
+
