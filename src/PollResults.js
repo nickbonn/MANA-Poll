@@ -4,10 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './PollResults.css';
 import './index.js';
 
-
-
-
-class PollResults extends React.Component {
+export class PollResults extends React.Component {
   constructor(props){
     super(props);
     this.state = {questions:[], answers:[]};

@@ -21,6 +21,7 @@ class App extends React.Component {
     this.state = {};
     this.signIn = this.signIn.bind(this);
     this.loadClassCode = this.loadClassCode.bind(this);
+    this.viewResults = this.viewResults.bind(this);
   }
 
   componentDidMount() {
@@ -87,6 +88,10 @@ class App extends React.Component {
     this.setState({classCode:code});
   }
 
+  viewResults(bool) {
+    this.setState({viewResult:bool})
+  }
+
   render() {
     var content = null; //what main content to show
     if (this.state.passwordAlert) {
@@ -101,14 +106,15 @@ class App extends React.Component {
     }
     //to identify which type of page to load: an if statement for if isTeacher is true, the make questions page will load. Else (student user), the answer question page will load
     else {
-      if(this.state.isTeacher) {
-        content = <Questions logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
-      } else if(!this.state.classCode){
+      if(this.state.isTeacher && !this.state.viewResult) {
+        content = <Questions resultsCallback = {this.viewResults} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />;
+      }else if(!this.state.classCode){
         content = <ClassCodes logged={this.state.userId} classCodeCallback={this.loadClassCode}/>;
-        
+      } else if (this.state.isTeacher){
+        console.log('hello');
+        content = <PollResult classCode={this.state.classCode}/>;
       } else {
-        content= <PollResult classCode={this.state.classCode}/>
-        //<AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
+        content= <AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
 
       }
     }
@@ -132,6 +138,17 @@ class App extends React.Component {
 }
 
 export class Questions extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      results:false
+    };
+  }
+  enterResults(event){
+    this.setState({results:true});
+    this.props.resultsCallback(this.state.results);
+  }
+  
   render() {
     if (!this.props.logged) { // not logged in
       return (
@@ -141,6 +158,7 @@ export class Questions extends React.Component {
       return (
         <div>
           <MakeQuestion />
+          <button className="btn btn-primary" onClick={(e) => this.enterResults(e)}>View Results</button>
         </div>
       );
     }
