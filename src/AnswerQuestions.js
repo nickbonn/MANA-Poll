@@ -73,8 +73,8 @@ class QuestionComp extends React.Component {
     constructor(props) {
         super(props);
         //sets the state properties
-            //--isAnswered is used to update the user state of anwering question. If user answers the clicker question
-            //                     this will be set to true and the succeful message loads on the screen.
+            //--isAnswered is used to update the user state of answering question. If user answers the clicker question
+            //this will be set to true and the successful message loads on the screen.
             //selectedOption: is the one to update the state of user selected option whenever user clicks on an option.
         this.state = { selectedOption:'', isAnswered:false};  
     }
@@ -112,7 +112,7 @@ class QuestionComp extends React.Component {
         var questionName = this.props.name;
         return (
             <div>
-                {/* this get called if the question has not been answered */}
+                {/* this gets called if the question has not been answered */}
                 {!this.state.isAnswered && 
                 <div>
                     <div className="well">{questionText}</div>
