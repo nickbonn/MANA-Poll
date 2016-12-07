@@ -12,7 +12,9 @@ class MakeQuestion extends React.Component {
             answer1: '',
             answer2: '',
             answer3: '',
-            answer4: ''
+            answer4: '',
+            classCode: '',
+            isQuestionSubmitted: false,
         };
 
     }
@@ -46,6 +48,12 @@ class MakeQuestion extends React.Component {
         });
     }
 
+    updateClassCode(event) {
+        this.setState({
+            classCode: event.target.value
+        });
+    }
+
     postQuestion(event) {
         event.preventDefault(); //don't submit
 
@@ -55,13 +63,16 @@ class MakeQuestion extends React.Component {
             answer1Text: this.state.answer1,
             answer2Text: this.state.answer2,
             answer3Text: this.state.answer3,
-            answer4Text: this.state.answer4,
-            time: firebase.database.ServerValue.TIMESTAMP
+            answer4Text: this.state.answer4
+
         }
 
         //var questionsRef = jsonObjectInTheCloud['questions']; 
-        var questionRef = firebase.database().ref('questions');
+        var questionRef = firebase.database().ref('questions/' + this.state.classCode);
         questionRef.push(questionData);
+        this.setState({
+            isQuestionSubmitted: true
+        });
 
         //empty out post (controlled input)
         this.setState({
@@ -81,12 +92,20 @@ class MakeQuestion extends React.Component {
                         </Col>
 
                         <Col sm={10}>
+                            <FormControl type="classCode" placeholder="Class Code (e.g. MATH126)" value={this.state.classCode.toUpperCase()} onChange={(e) => this.updateClassCode(e)} />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup controlId="formHorizontalEmail">
+                        <Col componentClass={ControlLabel} sm={2}>
+                        </Col>
+
+                        <Col sm={10}>
                             <FormControl type="question" placeholder="Question" value={this.state.question} onChange={(e) => this.updateQuestion(e)} />
                         </Col>
                     </FormGroup>
 
                     <FormGroup controlId="formHorizontalPassword" >
-                        <Col componentClass={ControlLabel} sm={2} className="questionBox">
+                        <Col componentClass={ControlLabel} sm={2} >
                         </Col>
 
                         <Col sm={10}>
@@ -118,9 +137,11 @@ class MakeQuestion extends React.Component {
                         </Col>
                     </FormGroup>
                 </Form>
+                {this.state.isQuestionSubmitted && <div className="well"> You have sucessfully submitted a question!</div>}
             </div >
         )
     }
 }
+
 
 export default MakeQuestion;
