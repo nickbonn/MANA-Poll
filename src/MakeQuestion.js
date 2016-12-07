@@ -86,7 +86,7 @@ class MakeQuestion extends React.Component {
     render() {
         return (
             <div >
-                <Form horizontal>
+                <Form horizontal className="question-form">
                     <FormGroup controlId="formHorizontalEmail">
                         <Col componentClass={ControlLabel} sm={2}>
                         </Col>

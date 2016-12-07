@@ -153,3 +153,20 @@ li {
 	position:relative;
 }
 
+@media only screen and (min-width: 768px) {
+		.question-form {
+			margin-left: -148px;
+		}
+}
+
+@media only screen and (min-width: 991px) {
+	.question-form {
+		margin-left: -192px;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.question-form {
+		margin-left: -228px;
+	}
+}

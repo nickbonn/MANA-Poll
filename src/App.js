@@ -170,6 +170,7 @@ export class Questions extends React.Component {
         <div>
           <MakeQuestion />
           <button className="btn btn-primary" onClick={(e) => this.enterResults(e)}>View Results</button>
+
         </div>
       );
     }
@@ -208,7 +209,7 @@ class ClassCodes extends React.Component {
     } else {
       return(
       <form>
-        Class Code: <input type="text" name="classCode" onChange={this.handleChange}/>
+        Class Code: <input type="text" placeholder="e.g. MATH126" name="classCode" onChange={this.handleChange}/>
         <button className="btn btn-primary" onClick={(e) => this.enterClass(e)}>Enter Class</button>
       </form>
     )

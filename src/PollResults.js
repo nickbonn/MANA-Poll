@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import React from 'react';
+import { ProgressBar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import './PollResults.css';
 import './index.js';
