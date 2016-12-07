@@ -192,7 +192,7 @@ class ClassCodes extends React.Component {
     this.setState(changes); //update state
   }
 
-  enterClass(event){
+  enterClass(event){ //make sure class code gets passed back up to main app class
     event.preventDefault();
     this.props.classCodeCallback(this.state.classCode.toUpperCase());
   }
