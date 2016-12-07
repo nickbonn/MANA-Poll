@@ -4,7 +4,7 @@ import './App.css';
 import { Link } from 'react-router';
 import firebase from 'firebase';
 import PollResult from './PollResults';
-import {Alert, ButtonGroup, Button, Glyphicon} from 'react-bootstrap';
+import {Alert, ButtonGroup, Button, Glyphicon, FormControl} from 'react-bootstrap';
 import MakeQuestion from './MakeQuestion';
 //import noUserPic from './img/no-user-pic.png';
 //import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
@@ -127,10 +127,13 @@ class App extends React.Component {
         <header className="container-fluid">
           <h1><Glyphicon glyph="tint" /> m a n a p o l l <Glyphicon glyph="tint" /></h1>
           <h6>A better way to poll</h6>
+          <h6 id="tiny-header">[Made in Seattle]</h6>
           {this.state.userId &&
             <div className="logout">
-              <button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</button>
-              <button className="btn btn-primary" onClick={() => this.goHome()}>Make a Question</button>
+              <ButtonGroup>
+                <Button className="btn btn-primary" onClick={() => this.goHome()}>Go Home</Button>
+                <Button className="btn btn-primary" onClick={() => this.signOut()}>Sign out {firebase.auth().currentUser.displayName}</Button>
+              </ButtonGroup>
             </div>
           }
         </header>
@@ -199,11 +202,18 @@ class ClassCodes extends React.Component {
       return (
         <div> User is not logged in!</div>  
       );
-    } else {
-      return(
-      <form>
-        Class Code: <input type="text" name="classCode" onChange={this.handleChange}/>
-        <button className="btn btn-primary" onClick={(e) => this.enterClass(e)}>Enter Class</button>
+    } else { 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      // RENDER AN ALERT IF THE CLASS DOES NOT EXIST, RIGHT NOW IT RENDERS AN EMPTY SCREEN IF THE CLASS DOES NOT EXIST
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////
+      return (
+      <form role="form" className="sign-up-form">
+        <FormControl className="enter-class" type="text" placeholder="Enter Class Code (e.g. Math126)" name="classCode" onChange={this.handleChange}/>
+        <button className="btn btn-primary enter-class" onClick={(e) => this.enterClass(e)}>Enter Class</button>
       </form>
     )
   }
@@ -493,7 +503,7 @@ class ValidationErrors extends React.Component {
           <p className="help-block">Not an email address!</p>
         }
         {this.props.errors.minLength &&
-          <p className="help-block">Must be at least {this.props.errors.minLength}characters.</p>
+          <p className="help-block">Must be at least {this.props.errors.minLength} characters.</p>
         }
         {this.props.errors.matches &&
           <p className="help-block">Must confirm same password below.</p>

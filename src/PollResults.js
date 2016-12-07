@@ -3,6 +3,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './PollResults.css';
 import './index.js';
+import ProgressBar from 'react-bootstrap';
 
 export class PollResults extends React.Component {
   constructor(props){
@@ -96,20 +97,16 @@ class IndivQuestion extends React.Component {
       <div className="span6">
         <h2>{this.props.answer.text}</h2><h5>Total Votes: {totalCount}</h5>
         <strong>{question1Text}</strong><span className="pull-right">{firstPercent}</span>
-        <div className="progress progress-danger active">
-            <div className="bar" style={{width: firstPercent}}></div>
+        <div className="progress progress-bar-danger active progress-bar-striped" style={{width: firstPercent}}>
         </div>
         <strong>{question2Text}</strong><span className="pull-right">{secondPercent}</span>
-        <div className="progress progress-info active">
-            <div className="bar" style={{width: secondPercent}}></div>
+        <div className="progress progress-bar-info active progress-bar-striped" style={{width: secondPercent}}>
         </div>
         <strong>{question3Text}</strong><span className="pull-right">{thirdPercent}</span>
-        <div className="progress progress-striped active">
-            <div className="bar" style={{width: thirdPercent}}></div>
+        <div className="progress progress-bar-warning active progress-bar-striped" style={{width: thirdPercent}}>
         </div>
         <strong>{question4Text}</strong><span className="pull-right">{fourthPercent}</span>
-        <div className="progress progress-success active">
-            <div className="bar" style={{width: fourthPercent}}></div>
+        <div className="progress progress-bar-success progress-bar-striped active" style={{width: fourthPercent}}>
         </div>
       </div>
     )
