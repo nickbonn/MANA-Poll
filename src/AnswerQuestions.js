@@ -72,8 +72,7 @@ class QuestionComp extends React.Component {
 
     constructor(props) {
         super(props);
-        //sets the state properties
-            //--isAnswered is used to update the user state of answering question. If user answers the clicker question
+            //--isAnswered is used to update the user state of answering a question. If user answers the clicker question
             //this will be set to true and the successful message loads on the screen.
             //selectedOption: is the one to update the state of user selected option whenever user clicks on an option.
         this.state = { selectedOption:'', isAnswered:false};  
@@ -86,20 +85,17 @@ class QuestionComp extends React.Component {
         });
         event.preventDefault();
         var answerRef = firebase.database().ref('answers/' + this.props.classCode);
-        //what gets sent to the firebase
-        //This is an answer object to be saved to the firebase.
-        //what happens when you click submit
+        //an answer object to be saved to the firebase.
         var newAnswer = {
             questionUID:this.props.question.key, 
             userUID:firebase.auth().currentUser.uid,        
             selectedOption:this.state.selectedOption
         };
         answerRef.push(newAnswer);
-        //this.handleClick();
     }
 
 
-//update the state property name selectedOption with the answer selected by the user
+//updates the state property name selectedOption with the answer selected by the user
     updateAnswer(event, question, option) {
         this.setState({
             selectedOption: option                        
@@ -133,5 +129,4 @@ class QuestionComp extends React.Component {
             )
       }
 }
-
 export default AnswerQuestions;
