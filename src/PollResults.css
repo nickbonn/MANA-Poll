@@ -1,3 +1,10 @@
 .span6{
   margin-bottom: 60px;
 }
+
+.bar {
+  background-color: red;
+  color: red;
+  fill: red;
+
+}
