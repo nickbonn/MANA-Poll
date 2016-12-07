@@ -65,6 +65,11 @@ export class PollResults extends React.Component {
   }
 
   render() {
+    if(this.state.questions.length === 0){
+      return (<div className="alert alert-danger">
+          <strong>You Have Entered an Invalid Class Code</strong> 
+                </div>);
+    }else {
     if (this.state.answers.length > 0) {
     var showQuestions = this.state.answers.map((answer) => {
       return <IndivQuestion answer={answer} /> //Create a question object for each question
@@ -73,6 +78,7 @@ export class PollResults extends React.Component {
     } else{
       return null;
     }
+  }
   }
 }
 

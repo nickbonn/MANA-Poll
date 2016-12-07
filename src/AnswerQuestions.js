@@ -41,7 +41,10 @@ class AnswerQuestions extends React.Component {
       return (
         <div> User is not logged in!</div>  
       );
-    } else { // logged in
+    } else if (this.state.questions.length === 0) {
+        return (<div className="alert alert-danger">
+        <strong>You Have Entered an Invalid Class Code</strong> </div>);
+    }else { // logged in
         var questionList = this.state.questions;
         //questionList: loops through all the questions and passes each question to the 
         //QuestionComp for it to be rendered

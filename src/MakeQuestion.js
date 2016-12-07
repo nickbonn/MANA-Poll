@@ -84,6 +84,12 @@ class MakeQuestion extends React.Component {
         });
     }
     render() {
+
+        var submitEnabled = false;
+        if (this.state.answer1.length > 0  && this.state.answer2.length > 0  && this.state.answer3.length > 0  && this.state.answer4.length > 0) {
+            submitEnabled = true;
+        }
+
         return (
             <div >
                 <h4 className="center">Hey, {firebase.auth().currentUser.displayName}! Please enter information to create a question, or click "View Results" to see created questions.</h4>
@@ -135,7 +141,10 @@ class MakeQuestion extends React.Component {
                     </FormGroup>
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <Button type="submit" onClick={(e) => this.postQuestion(e)}> Submit  </Button>
+                        <span>
+                            <p id='fillFour'>Please fill in all four answer options</p>
+                            <Button type="submit" disabled = {!submitEnabled} onClick={(e) => this.postQuestion(e)}> Submit  </Button>
+                        </span>
                         </Col>
                     </FormGroup>
                 </Form>
