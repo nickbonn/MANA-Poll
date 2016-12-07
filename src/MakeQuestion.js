@@ -86,6 +86,8 @@ class MakeQuestion extends React.Component {
     render() {
         return (
             <div >
+                <h4 className="center">Hey, {firebase.auth().currentUser.displayName}! Please enter information to create a question, or click "View Results" to see created questions.</h4>
+
                 <Form horizontal className="question-form">
                     <FormGroup controlId="formHorizontalEmail">
                         <Col componentClass={ControlLabel} sm={2}>
