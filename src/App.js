@@ -109,8 +109,10 @@ class App extends React.Component {
       } else {
         content= //<PollResult classCode={this.state.classCode}/>
         <AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
-      }  
-  }
+
+      }
+    }
+
 
     return (
       <div>
