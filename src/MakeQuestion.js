@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-//import { Link } from 'react-router';
 import firebase from 'firebase';
 import { Col, Form, FormGroup, FormControl, Button, ControlLabel } from 'react-bootstrap';
 

@@ -9,6 +9,6 @@
 >As a teacher, I want to be able to view the results of a clicker question to see if the students understand the content or if I need to review the topic. 
 
 ##Additional Comments
-> Our app is relatively simple but we put quite a lot of effort into it. We hope that it shows, and we want to say thank you Cameron and Joel for a very good quarter!
+> Our app is relatively simple but its functionality was something we worked very hard on. We hope that it shows, and we want to say thank you Cameron and Joel for a very good quarter!
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

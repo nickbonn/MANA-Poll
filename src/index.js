@@ -21,7 +21,6 @@ firebase.initializeApp(config);
 //load CSS
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css'
-//import './css/index.css';
 
 ReactDOM.render(
   <Router history={hashHistory}> 

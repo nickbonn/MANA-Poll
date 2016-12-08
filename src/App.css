@@ -1,30 +1,3 @@
-/* this came with the app */
-/*.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}*/
-/* END */
-
 body {
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	background:rgba(245,248,250,1);
@@ -37,7 +10,6 @@ header {
 	background:lightsalmon;
 	margin-bottom:10px;
 	position:relative;
-
 }
 
 @media only screen and (max-width: 379px) {
@@ -46,6 +18,7 @@ header {
 	}
 }
 
+/* logout and go home buttons */
 .logout {
 	position:absolute;
 	right:10px;
@@ -60,6 +33,7 @@ header {
 	}
 }
 
+/* for text prompting teacher to create a question */
 .center {
 	text-align: center;
 	margin-top: 15px;
@@ -72,34 +46,7 @@ header {
 	}
 }
 
-
-/*.avatar, .image {
-	width:50px;
-	height:50px;
-	border-radius: 50%;
-}
-
-.image {
-	margin:10px;
-	float:left;
-}
-
-li {
-	padding-bottom:10px;
-	margin-bottom:10px;
-	margin-top:10px;
-	border-bottom:1px solid #d3d3d3;
-}
-
-.time {
-	color: #9d9d9d;
-}
-
-.handle {
-	font-size:1.25em;
-	font-weight: 700;
-}*/
-
+/* links */
 .link {
     color: black;
     text-decoration: none;
@@ -111,20 +58,14 @@ li {
      cursor: pointer;
 }
 
-.load {
-    display: table-cell;
-    vertical-align: middle
-}
-
 .sign-up-form button {
-  margin-right:1em;
+  margin-right: 1em;
 }
 
-.sign-up-form .avatar {
+.sign-up-form {
   margin-right: .5em;
   margin-bottom: .5em;
 }
-
 
 /* overriding bootsrap button-group */
 .btn-group {
@@ -136,25 +77,22 @@ li {
 	margin-right: 0px;
 }
 
-#wrapper {
-	min-height:100%;
-	position:relative;
-}
-
+/* overriding bootstrap default sizing for header tags */
 #tiny-header {
 	font-size: 10px;
 }
 
+/* for go home button to appear on the left */
 .left-button {
 	float: left;
 }
 
+/* class code input styling */
 .enter-class {
 	margin-top: 15px;
 }
 
-
-
+/* making question form responsive */
 @media only screen and (min-width: 768px) {
 	.question-form {
 		margin-left: -148px;
@@ -175,6 +113,7 @@ li {
 	}
 }
 
+/* styling for teacher warning prompt */
 #fillFour{
 	color: grey;
 }

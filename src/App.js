@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
 import './App.css';
 import { Link } from 'react-router';
 import firebase from 'firebase';
 import PollResult from './PollResults';
 import {Alert, ButtonGroup, Button, Glyphicon, FormControl} from 'react-bootstrap';
 import MakeQuestion from './MakeQuestion';
-//import noUserPic from './img/no-user-pic.png';
-//import { PostBox, PostList, ChannelList, CHANNEL } from './Posts';
 import AnswerQuestions from './AnswerQuestions';
 import ReactDOM from 'react-dom';
 import './PollResults.css';
@@ -26,44 +23,38 @@ class App extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        //console.log(user);
-        //console.log('Auth state changed: logged in as', user.email);
         this.setState({ userId: user.uid });
         //loading the isTeacher property from the users table where users.uid = authenticated user.uid and setting the isTeacher property in state
         var userRef = firebase.database().ref("users/"+user.uid);
         userRef.once("value").then((snapshot)=>{
             var key = snapshot.key;
             var value = snapshot.val();
-            //console.log(value);
             this.setState({isTeacher: value.isTeacher});
         });
 
         
       }
       else {
-        //console.log('Auth state changed: logged out');
         this.setState({ userId: null }); //null out saved state
       }
     })
   }
 
   // Registering new users
-  signUp(email, password, handle, /*classCodeVal,*/ teacherBoolean) {
+  signUp(email, password, handle, teacherBoolean) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function (firebaseUser) {
         var profilePromise = firebaseUser.updateProfile({
           displayName: handle,
-          //classCode: classCodeVal,
           isTeacher: teacherBoolean
         });
         // creating new entry in the Cloud DB
         var userRef = firebase.database().ref('users/' + firebaseUser.uid);
         var userData = {
           handle: handle,
-          //classCode: classCodeVal,
           isTeacher: teacherBoolean
         }
-        var userPromise = userRef.set(userData); //update entry in JOITC
+        var userPromise = userRef.set(userData);
         return Promise.all(profilePromise, userPromise);
       })
       .then(() => this.forceUpdate())
@@ -101,7 +92,7 @@ class App extends React.Component {
     if (this.state.passwordAlert) {
       var passwordAlertTag = <Alert bsStyle="warning"><strong>Password is incorrect for username!</strong> Please try again.</Alert>;
     }
-    if (!this.state.userId) { //if logged out, show signup form
+    if (!this.state.userId) { // login state
       if (LOGIN) {
         content = <Login signInCallback={this.signIn} passwordAlert={passwordAlertTag} />;
       } else {
@@ -115,17 +106,11 @@ class App extends React.Component {
       }else if(!this.state.classCode){
         content = <ClassCodes logged={this.state.userId} classCodeCallback={this.loadClassCode}/>;
       } else if (this.state.isTeacher){
-        console.log('hello');
         content = <PollResult classCode={this.state.classCode}/>;
       } else {
-
         content= <AnswerQuestions classCode={this.state.classCode} logged={this.state.userId} signUpCallback={this.signUp} signInCallback={this.signIn} />
-
-
-
       }
     }
-
 
     return (
       <div>
@@ -150,6 +135,7 @@ class App extends React.Component {
   }
 }
 
+// component for showing user question information 
 export class Questions extends React.Component {
   constructor(props){
     super(props);
@@ -172,27 +158,25 @@ export class Questions extends React.Component {
         <div>
           <MakeQuestion />
           <button className="btn btn-primary" onClick={(e) => this.enterResults(e)}>View Results</button>
-
         </div>
       );
     }
   }
 }
 
+// component for prompting user for a class code
 class ClassCodes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       'classCode': undefined
     };
-    //function binding
     this.handleChange = this.handleChange.bind(this);
   }  
 
   handleChange(event) {
     var field = event.target.name;
     var value = event.target.value;
-
     var changes = {}; //object to hold changes
     changes[field] = value; //change this field
     this.setState(changes); //update state
@@ -209,21 +193,14 @@ class ClassCodes extends React.Component {
         <div> User is not logged in!</div>  
       );
     } else { 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      // RENDER AN ALERT IF THE CLASS DOES NOT EXIST, RIGHT NOW IT RENDERS AN EMPTY SCREEN IF THE CLASS DOES NOT EXIST
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      return (
+      return ( // will handle error of inputing a class code that is empty
       <form role="form" className="sign-up-form">
         <FormControl className="enter-class" type="text" placeholder="Enter Class Code (e.g. Math126)" name="classCode" onChange={this.handleChange}/>
         <button className="btn btn-primary enter-class" onClick={(e) => this.enterClass(e)}>Enter Class</button>
       </form>
-    )
+      )
+    }
   }
-}
 }
 
 class Login extends React.Component {
@@ -255,7 +232,6 @@ class SignUpForm extends React.Component {
       'password': undefined,
       'passwordConfirm': undefined,
       'handle': undefined,
-      //'classCode': undefined,
       'isTeacher': undefined
     };
     this.handleChange = this.handleChange.bind(this);
@@ -288,7 +264,7 @@ class SignUpForm extends React.Component {
   //handle signUp button
   signUp(event) {
     event.preventDefault(); //don't submit
-    this.props.signUpCallback(this.state.email, this.state.password, this.state.handle, /*this.state.classCode,*/ this.state.isTeacher);
+    this.props.signUpCallback(this.state.email, this.state.password, this.state.handle, this.state.isTeacher);
   }
 
   // basis of validation code provided by Joel Ross
@@ -354,14 +330,13 @@ class SignUpForm extends React.Component {
     var passwordErrorsForSignIn = this.validate(this.state.password, { required: true, minLength: 6 });
     var passwordConfirmErrors = this.validate(this.state.passwordConfirm, { required: true });
     var handleErrors = this.validate(this.state.handle, { required: true, minLength: 3 });
-    //var classCodeErrors = this.validate(this.state.classCode, { required: true, minLength: 6 });
     if (this.state.isTeacher === true || this.state.isTeacher === false) {
       var isTeacherErrors = true;
     } else {
       var isTeacherErrors = false;
     }
     //button validation
-    var signUpEnabled = (emailErrors.isValid && passwordErrors.isValid && handleErrors.isValid && passwordConfirmErrors.isValid && /*classCodeErrors.isValid &&*/ isTeacherErrors);
+    var signUpEnabled = (emailErrors.isValid && passwordErrors.isValid && handleErrors.isValid && passwordConfirmErrors.isValid && isTeacherErrors);
 
       return (
         <form role="form" className="sign-up-form">
@@ -369,20 +344,14 @@ class SignUpForm extends React.Component {
           <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
           <ValidatedInput field="passwordConfirm" type="password" label="Confirm Password" changeCallback={this.handleChange} errors={passwordConfirmErrors} />
           <ValidatedInput field="handle" type="text" label="Handle" changeCallback={this.handleChange} errors={handleErrors} />
-          {/*<ValidatedInput field="classCode" type="text" label="Please Input Class Code:" changeCallback={this.handleChange} errors={classCodeErrors} />*/}
           <ButtonGroup>
             <Button className="btn-warning" onClick={this.teacherClick}>I am a teacher</Button>
             <Button className="btn-warning" onClick={this.studentClick}>I am a student</Button>
           </ButtonGroup>
-          {/*<DropdownButton className="btn-warning" title="Status">
-            <MenuItem eventKey="1">I am a teacher</MenuItem>
-            <MenuItem eventKey="2">I am a student</MenuItem>
-          </DropdownButton>*/}
-
-        <div className="form-group sign-up-buttons">
-          <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
-          <button className="btn" onClick={this.handleClick}><Link to="/login" className="link">Have an account? Sign in here!</Link></button>
-        </div>
+          <div className="form-group sign-up-buttons">
+            <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
+            <button className="btn" onClick={this.handleClick}><Link to="/login" className="link">Have an account? Sign in here!</Link></button>
+          </div>
       </form>
     );
   }
@@ -404,7 +373,6 @@ class SignInForm extends React.Component {
   handleChange(event) {
     var field = event.target.name;
     var value = event.target.value;
-
     var changes = {}; //object to hold changes
     changes[field] = value; //change this field
     this.setState(changes); //update state
@@ -422,7 +390,6 @@ class SignInForm extends React.Component {
 
   validate(value, validations) {
     var errors = { isValid: true, style: '' };
-
     if (value !== undefined) { //check validations
       //handle required
       if (validations.required && value === '') {
@@ -436,7 +403,7 @@ class SignInForm extends React.Component {
         errors.isValid = false;
       }
 
-      //handle email type ??
+      //handle email type
       if (validations.email) {
         //pattern comparison from w3c
         //https://www.w3.org/TR/html-markup/input.email.html#input.email.attrs.value.single
