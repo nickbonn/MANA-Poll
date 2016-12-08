@@ -1,36 +1,10 @@
-/* this came with the app */
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-/* END */
-
 body {
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	background:rgba(245,248,250,1);
 }
 
 header {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-align: center;
 	padding:10px;
 	background:lightsalmon;
@@ -38,70 +12,41 @@ header {
 	position:relative;
 }
 
+@media only screen and (max-width: 379px) {
+	header > h1 {
+		font-size: 25px;
+	}
+}
+
+/* logout and go home buttons */
 .logout {
 	position:absolute;
 	right:10px;
 	top: 10px;
 }
 
-.avatar, .image {
-	width:50px;
-	height:50px;
-	border-radius: 50%;
+@media only screen and (max-width: 880px) {
+	.logout {
+		position: relative;
+		bottom: 10px;
+		margin-left: 15px;
+	}
 }
 
-.image {
-	margin:10px;
-	float:left;
+/* for text prompting teacher to create a question */
+.center {
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 25px;
 }
 
-li {
-	padding-bottom:10px;
-	margin-bottom:10px;
-	margin-top:10px;
-	border-bottom:1px solid #d3d3d3;
+@media only screen and (max-width: 880px) {
+	.center {
+		font-size: 12px;
+	}
 }
 
-.post-input {
-	margin-left:70px;
-	margin-top:10px;
-}
-
-.time {
-	color: #9d9d9d;
-}
-
-.handle {
-	font-size:1.25em;
-	font-weight: 700;
-}
-
-.post {
-	font-size: 1.5em;
-}
-
-.post-box {
-	border-bottom:1px solid #d3d3d3;
-	padding:20px;
-	margin-left:100px;
-	margin-right:100px;
-	background-color: white;
-    height: 130px;
-}
-
-.send-post {
-	text-align:right;
-	margin-top:5px;
-}
-
-.post-box:hover{
-	background-color:rgba(211, 211, 211, 0.27);
-}
-
-.write-post, .write-post:hover  {
-	background-color: rgb(229, 242, 247);
-}
-
+/* links */
 .link {
     color: black;
     text-decoration: none;
@@ -113,16 +58,62 @@ li {
      cursor: pointer;
 }
 
-.load {
-    display: table-cell;
-    vertical-align: middle
-}
-
 .sign-up-form button {
-  margin-right:1em;
+  margin-right: 1em;
 }
 
-.sign-up-form .avatar {
+.sign-up-form {
   margin-right: .5em;
   margin-bottom: .5em;
+}
+
+/* overriding bootsrap button-group */
+.btn-group {
+	margin-bottom: 20px;
+	margin-top: 5px;
+}
+
+.btn-group > .btn {
+	margin-right: 0px;
+}
+
+/* overriding bootstrap default sizing for header tags */
+#tiny-header {
+	font-size: 10px;
+}
+
+/* for go home button to appear on the left */
+.left-button {
+	float: left;
+}
+
+/* class code input styling */
+.enter-class {
+	margin-top: 15px;
+}
+
+/* making question form responsive */
+@media only screen and (min-width: 768px) {
+	.question-form {
+		margin-left: -148px;
+	}
+}
+
+@media only screen and (min-width: 991px) {
+	.question-form {
+		margin-left: -192px;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.question-form {
+		margin-left: -228px;
+		margin-right: 30px;
+
+	}
+}
+
+/* styling for teacher warning prompt */
+#fillFour{
+	color: grey;
 }

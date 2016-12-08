@@ -5,6 +5,8 @@ import './index.css';
 import {Login, Join, Questions} from './App';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import firebase from 'firebase';
+import PollResults from './PollResults';
+
 
 // Initialize Firebase
 var config = {
@@ -18,7 +20,7 @@ firebase.initializeApp(config);
 
 //load CSS
 import 'bootstrap/dist/css/bootstrap.css';
-//import './css/index.css';
+import 'bootstrap/dist/css/bootstrap-theme.css'
 
 ReactDOM.render(
   <Router history={hashHistory}> 
@@ -27,6 +29,7 @@ ReactDOM.render(
       <Route path="join" component={Join} />
       <Route path="login" component={Login} />
       <Route path="questions" component={Questions} />
+      <Route path="results" component={PollResults} />
     </ Route>
   </ Router>
   ,
