@@ -4,6 +4,8 @@
 
 >As a student, I want to be able to view and answer questions so I can show my understanding and participate in class. 
 
+>As a student, I want to be able to interact with questions from multiple classes without switching platforms.
+
 >As a teacher, I want to be able to instantly ask students questions in order to see if they are learning and to make sure they are participating in class. 
 
 >As a teacher, I want to be able to view the results of a clicker question to see if the students understand the content or if I need to review the topic. 
