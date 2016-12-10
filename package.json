@@ -1,7 +1,7 @@
 {
   "name": "MANA-Poll",
   "author": "Aisha, Marissa, Nick, Alexander",
-  "homepage": "https://github.com/nickbonn/MANA-Poll/build",
+  "homepage": "https://nickbonn.github.io/MANA-Poll/build/",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
